@@ -31,6 +31,16 @@ const userSchema = new mongoose.Schema({
     },
     select: false,
   },
+  image: {
+    type: String,
+    required: true,
+    validate: {
+      validator(v) {
+        return validator.isURL(v);
+      },
+      message: 'в поле image должен быть валидный url-адрес',
+    },
+  },
 });
 
 module.exports = mongoose.model('user', userSchema);

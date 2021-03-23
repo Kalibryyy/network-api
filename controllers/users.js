@@ -5,7 +5,7 @@ const NotFoundError = require('../errors/not-found-err');
 const errorMessages = require('../configs/error-messages');
 
 const createUser = (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, image } = req.body;
 
   User.findOne({ email })
     .then((user) => {
@@ -15,12 +15,14 @@ const createUser = (req, res, next) => {
     });
 
   User.create({
-    name, email, password,
+    name, email, password, image
   })
     .then((user) => {
       res.send({
         name: user.name,
         email: user.email,
+        image: user.image,
+        id: user._id,
       });
     })
     .catch((err) => errorHandler(res, err, next));
